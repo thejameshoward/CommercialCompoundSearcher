@@ -15,7 +15,7 @@ conda activate commercialSearch
 ```
 
 ## Requirements
-If you'd like to use your own environment, here is a list of required packages to install.
+If you'd like to use your own environment, here is a list of known dependencies.
 
 1.  [Python 3.11.6](https://www.python.org/downloads/release/python-3116/)
 2.  [RDKit 2022.9.5](https://pypi.org/project/rdkit/)
