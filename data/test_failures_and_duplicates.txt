@@ -1,0 +1,12 @@
+SMILES
+OC(=O)CC1=CC(O)=C(O)C=C1
+OC1=C(O)C=C(C=O)C=C1
+OC1=C(O)C=C(C=O)C=C1
+Cl[H].NCCC1=CC=C(O)C(O)=C1
+OC1=C(O)C(O)=C2C(=O)C=C(OC2=C1)C1=CC=CC=C1
+Cc1cc(-c2ccc(/N=C/c3cccc(O)c3O)c(C)c2)ccc1/N=C/c1cccc(O)c1O
+Oc1cccc(/C=N/c2ccc(CCc3ccc(/N=C/c4cccc(O)c4O)cc3)cc2)c1O
+CO[C@@]12[C@H](COC(N)=O)c3c(O)c(/N=N/C(=O)c4ccccc4)c(C)c(O)c3N1C[C@@H]1N[C@@H]12
+CCCCOc1ccc2c(c1)OC/C(=C\c1ccc(O)c(O)c1)C2=O
+COc1cc(/C=C/Cc2ccc(O)c(O)c2OC)ccc1OC(C)=O
+Cc1c(-c2ccc(O)cc2)n(Cc2ccc(OCCN3CCCCCC3)cc2)c2ccc(O)cc12
