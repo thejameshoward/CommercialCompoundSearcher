@@ -1,0 +1,9 @@
+SMILES
+c1c([nH]c2ccccc12)-c1ccccc1
+Cc1ccc(cc1)-c1[c]c2[c][c][c][c]c2[nH]1
+C1c2ccccc2-c2cc3ccccc3n12
+Cn1c(cc2ccccc12)-c1ccccc1
+Cc1ccc2cc([nH]c2c1)-c1ccccc1
+Cc1ccc(cc1)-c1cc2ccccc2[nH]1
+Cc1c([nH]c2ccccc12)-c1ccccc1
+Cc1ccc2[nH]c(cc2c1)-c1ccccc1

@@ -2,8 +2,8 @@
 # coding: utf-8
 
 '''
-Functions for processing
-commercially available compounds
+Functions for processing commercially
+ available compounds
 '''
 
 from __future__ import annotations
@@ -336,9 +336,45 @@ EXAMPLE_VENDORS_TO_KEEP = ['TCI (Tokyo Chemical Industry)',
  'Sigma-Aldrich',
  'VWR, Part of Avantor']
 
-def canonicalize_smiles(smiles: str):
+class PubchemVendor:
     '''
+    Class for containing the information
+    stored in Pubchem vendor JSON
+    '''
+    def __init__(self, CID: int, vendor_info: dict) -> None:
+        self.CID = int(CID)
+        self.RegistryID = vendor_info.get('RegistryID')
+        self.SID = vendor_info.get('SID')
+        self.SourceDetail = vendor_info.get('SourceDetail')
+        self.SourceName = vendor_info.get('SourceName')
+        self.SourceRecordURL = vendor_info.get('SourceRecordURL')
+        self.SourceURL = vendor_info.get('SourceURL')
 
+        #for k in vendor_info.keys():
+        #    if k not in ['SourceURL', 'SourceRecordURL', 'SourceName', 'SourceDetail', 'SID', 'RegistryID']:
+        #        print(f'{k} not handled by PubchemVendor class.')
+
+    def __str__(self) -> str:
+        return f'PubchemVendor(CID={self.CID}, RegistryID={self.RegistryID}), SID={self.SID}, SourceName={self.SourceName}'
+
+def filter_vendor_objects(vendor_list: list[PubchemVendor],
+                          vendors_to_keep) -> list[PubchemVendor]:
+    return [x for x in vendor_list if x.SourceName in vendors_to_keep]
+
+def canonicalize_smiles(smiles: str) -> str:
+    '''
+    Creates an RDKit mol object from a SMILES
+    string and converts the mol into a canonical
+    SMILES string.
+
+    Parameters
+    ----------
+    smiles: str
+        SMILES string to be canonicalized
+
+    Returns
+    ----------
+    str
     '''
     mol = Chem.MolFromSmiles(smiles)
     if mol is not None:
@@ -347,25 +383,51 @@ def canonicalize_smiles(smiles: str):
         print(f'SMILES {smiles} made None mol. Returning SMILES.')
         return smiles
 
-def smiles_to_inchi(smiles: str) -> str:
+def smiles_to_inchi(smiles: str) -> str | None:
     '''
+    Creates an RDKit mol object from a SMILES
+    string and converts the mol into a InChI
+    string.
 
+    Parameters
+    ----------
+    smiles: str
+        SMILES string to be converted into
+        an InChI string
+
+    Returns
+    ----------
+    str
     '''
     mol = Chem.MolFromSmiles(smiles)
     if mol is not None:
         return Chem.MolToInchi(mol)
     else:
         print(f'SMILES {smiles} made None mol.')
+        return None
 
-def smiles_to_inchi_key(smiles: str) -> str:
+def smiles_to_inchi_key(smiles: str) -> str | None:
     '''
+    Creates an RDKit mol object from a SMILES
+    string and converts the mol into a InChI
+    key.
 
+    Parameters
+    ----------
+    smiles: str
+        SMILES string to be converted into
+        an InChI key
+
+    Returns
+    ----------
+    str
     '''
     mol = Chem.MolFromSmiles(smiles)
     if mol is not None:
         return Chem.MolToInchiKey(mol)
     else:
         print(f'SMILES {smiles} made None mol.')
+        return None
 
 def remove_duplicate_inchi_keys(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     '''
@@ -393,7 +455,6 @@ def remove_duplicate_inchi_keys(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Data
     filtered = df[~df['INCHI_KEY'].isin(dups)].copy(deep=True)
 
     # Drop the duplicates from the filtered out
-    #TODO check if this is only exact duplicates
     filtered_out = filtered_out.drop_duplicates(subset='INCHI_KEY')
 
     # Add the filtered out that has the dropped
@@ -414,7 +475,7 @@ def get_cid_from_inchi_key(inchi_key: str):
 
     return j['IdentifierList']['CID'][0]
 
-def get_vendor_list_from_cid(cid: int) -> list:
+def get_vendor_list_from_cid(cid: int) -> list[PubchemVendor]:
     '''
     Gets a list of vendors from Pubchem based on
     the CID using the PUG REST API
@@ -437,9 +498,46 @@ def get_vendor_list_from_cid(cid: int) -> list:
         print(f'CID {cid} does not have vendors')
         return []
 
+    vendors = [PubchemVendor(cid, x) for x in chemical_vendors['Sources']]
+
+    return vendors
+
+    for v in vendors:
+        print(v)
+
     chemical_vendors = chemical_vendors['Sources']
 
+
+
     return [vendor["SourceName"] for vendor in chemical_vendors]
+
+def get_vendor_json(cid: int) -> list:
+    '''
+    Gets a list of vendors from Pubchem based on
+    the CID using the PUG REST API
+
+    Returns empty list if no vendors are found
+    '''
+    url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/categories/compound/{cid}/JSON/?response_type=view'
+    with urllib.request.urlopen(url) as u:
+        data = u.read()
+    data = data.decode('utf-8')
+    j = json.loads(data)
+
+    chemical_vendors = None
+    for category in j['SourceCategories']['Categories']:
+        if category['Category'].casefold() == 'Chemical Vendors'.casefold():
+            chemical_vendors = category
+            break
+
+    if chemical_vendors is None:
+        print(f'CID {cid} does not have vendors')
+        return []
+
+    results = []
+    for d in chemical_vendors['Sources']:
+        results.append(PubchemVendor(d))
+    return results
 
 def convert_str_list(s: str) -> list:
     if isinstance(s, list):
@@ -457,19 +555,29 @@ def remove_specific_vendors_from_dataframe(dataframe: pd.DataFrame, vendors: lis
     dataframe['VENDORS'] = dataframe['VENDORS'].apply(_remove_from_str_list, to_remove_list=vendors)
     return dataframe
 
+
+def chunkify(lst, n):
+    '''Yields successive n-size chunks from lst'''
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
+
 def draw_molecules_to_grid_image(smiles: list[str],
                                  mols_per_row: tuple = 5,
-                                 maxMols: int = 50,
+                                 mols_per_image: int = 50,
                                  img_resolution: int = 500,
                                  save_path: Path = None,
                                  ):
     '''
-    Draws the molecules in dataframe['SMILES'] to a file
-    in filtered_molecules
+    Draws the molecules in a list of smiles to images
+    and saves them to save_path. Up to 50 molecules
+    per image is supported.
     '''
 
     if isinstance(save_path, str):
         save_path = Path(save_path)
+
+    if mols_per_image > 50:
+        raise ValueError('Only 50 molecules per image are allowed.')
 
     # Specify grid shape
     grid_width = mols_per_row
@@ -477,18 +585,50 @@ def draw_molecules_to_grid_image(smiles: list[str],
     # Specify resolution of the molecule images
     image_size = (img_resolution, img_resolution)
 
-    mols = [Chem.MolFromSmiles(s) for s in smiles]
+    chunks = [x for x in chunkify(smiles, mols_per_image)]
 
-    png = Draw.MolsToGridImage(mols,
-                            molsPerRow=grid_width,
-                            subImgSize=image_size,
-                            highlightAtomLists=None,
-                            highlightBondLists=None,
-                            maxMols=maxMols,
-                            returnPNG=False,
-                            legends=[f"SMILES: {s}" for s in smiles])
+    ims = []
 
-    if save_path is not None:
-        png.save(save_path)
+    for i, c in enumerate(chunks):
 
-    return png
+        mols = [Chem.MolFromSmiles(s) for s in c]
+
+        png = Draw.MolsToGridImage(mols=mols,
+                                   #maxMols=mols_per_image),
+                                   returnPNG=False,
+                                   legends=[f"SMILES: {s}" for s in c],
+                                   molsPerRow=grid_width,
+                                   subImgSize=image_size)
+
+        if save_path is not None:
+            png.save(Path(save_path.parent / f'{save_path.stem}_{i}.png'))
+
+        ims.append(png)
+
+    return ims
+
+def get_CAS_from_cid(cid: int) -> str | None:
+    '''
+    Gets a CAS number from Pubchem based on
+    the CID using the PUG REST API
+
+    Returns empty string if no CAS is found
+    '''
+    #print(cid, type(cid))
+    url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/synonyms/JSON/'
+    #print(url)
+    with urllib.request.urlopen(url) as u:
+        data = u.read()
+    data = data.decode('utf-8')
+    j = json.loads(data)
+    CAS = [x for x in j['InformationList']['Information'][0]['Synonym'] if len(''.join([z for z in x if z == '-'])) == 2]
+    CAS = [x for x in CAS if all([z.isdigit() or z == '-' for z in x])]
+
+    if len(CAS) == 0:
+        return None
+
+    if len(CAS) != 1:
+        print(f'Found {len(CAS)} CAS numbers for CID {cid}')
+        print(CAS)
+
+    return str(CAS[0])

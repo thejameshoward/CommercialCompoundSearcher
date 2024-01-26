@@ -20,6 +20,10 @@ If you'd like to use your own environment, here is a list of known dependencies.
 1.  [Python 3.11.6](https://www.python.org/downloads/release/python-3116/)
 2.  [RDKit 2022.9.5](https://pypi.org/project/rdkit/)
 2.  [Pandas 2.1.2](https://pandas.pydata.org/docs/getting_started/install.html)
+4.  [html-to-json 2.0.0](https://pypi.org/project/html-to-json/)
+5   [requests 2.31.0](https://pypi.org/project/requests/)
+6.  [mechanize 0.4.9](https://pypi.org/project/mechanize/)
+7.  [openpyxl]
 
 ## Contributors
 
