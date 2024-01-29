@@ -466,6 +466,15 @@ def remove_duplicate_inchi_keys(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Data
 def get_cid_from_inchi_key(inchi_key: str):
     '''
     Gets the CID from Pubchem using the PUG REST API.
+
+    Parameters
+    ----------
+    inchi_key: str
+        WRITE DOC STRING
+
+    Returns
+    ----------
+    str
     '''
     url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/{inchi_key}/cids/JSON/'
     with urllib.request.urlopen(url) as u:
