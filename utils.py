@@ -3,7 +3,7 @@
 
 '''
 Functions for processing commercially
- available compounds
+available compounds
 '''
 
 from __future__ import annotations
@@ -380,8 +380,8 @@ def canonicalize_smiles(smiles: str) -> str:
     if mol is not None:
         return Chem.MolToSmiles(mol, canonical=True)
     else:
-        print(f'SMILES {smiles} made None mol. Returning SMILES.')
-        return smiles
+        print(f'SMILES {smiles} made None mol.')
+        return np.nan
 
 def smiles_to_inchi(smiles: str) -> str | None:
     '''
@@ -404,7 +404,7 @@ def smiles_to_inchi(smiles: str) -> str | None:
         return Chem.MolToInchi(mol)
     else:
         print(f'SMILES {smiles} made None mol.')
-        return None
+        return np.nan
 
 def smiles_to_inchi_key(smiles: str) -> str | None:
     '''
@@ -427,7 +427,7 @@ def smiles_to_inchi_key(smiles: str) -> str | None:
         return Chem.MolToInchiKey(mol)
     else:
         print(f'SMILES {smiles} made None mol.')
-        return None
+        return np.nan
 
 def remove_duplicate_inchi_keys(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     '''
@@ -540,18 +540,23 @@ def get_vendor_json(cid: int) -> list:
     return results
 
 def convert_str_list(s: str) -> list:
+    '''
+    Converts the string literal s into
+    a Python list.
+    '''
     if isinstance(s, list):
         return s
     return list(ast.literal_eval(s))
 
-def _remove_from_str_list(list: list[str], to_remove_list: list[str]) -> str:
+def _remove_from_str_list(list: list[str],
+                          to_remove_list: list[str]) -> str:
     '''
     Helper function for df.apply to remove vendors from
     the list_of_vendors if theyare in vendors_to_remove
     '''
     return [x for x in list if x not in to_remove_list]
 
-def remove_specific_vendors_from_dataframe(dataframe: pd.DataFrame, vendors: list):
+def remove_specific_vendors_from_dataframe(dataframe: pd.DataFrame, vendors: list) -> pd.DataFrame:
     dataframe['VENDORS'] = dataframe['VENDORS'].apply(_remove_from_str_list, to_remove_list=vendors)
     return dataframe
 
