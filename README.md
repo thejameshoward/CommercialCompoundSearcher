@@ -1,5 +1,5 @@
 # CommercialCompoundSearcher
-A set of functions and complementary Jupyter Notebook for assessing the commercial availability of molecules. This notebook will "clean" a list of SMILES strings with RDKit and query Pubchem for [Pubchem CIDs](https://pubchem.ncbi.nlm.nih.gov/docs/compounds) and a list of vendors. The remaining cells of the notebook are for filtering vendors. Unfortunately, getting the price of the molecule is not supported at this time.
+This repo provides a set of functions and complementary Jupyter Notebook for assessing the commercial availability of molecules. This notebook will "clean" a list of SMILES strings with RDKit and query Pubchem for [Pubchem CIDs](https://pubchem.ncbi.nlm.nih.gov/docs/compounds) and a list of vendors. The remaining cells of the notebook are for filtering vendors and checking whether the molecules exist in the Sigman chemical inventory. Unfortunately, getting the price of the molecule is not supported at this time.
 
 ## Installation
 A conda environment is provided in the `env.yml` file. To create the environment, run
@@ -25,8 +25,7 @@ If you'd like to use your own environment, here is a list of known dependencies.
 
 ## Future features
 
-1.  Query Pubchem for CAS numbers (WIP)
-2.  Include purchase links in vendor selection (WIP)
+1.  Include purchase links in vendor selection (WIP)
 
 ## Contributors
 -   James Howard, PhD
