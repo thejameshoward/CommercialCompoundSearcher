@@ -1,7 +1,0 @@
-SMILES,INCHI,INCHI_KEY,CID,VENDORS,CAS_NUMBER
-c1ccc(-c2cc3ccccc3[nH]2)cc1,"InChI=1S/C14H11N/c1-2-6-11(7-3-1)14-10-12-8-4-5-9-13(12)15-14/h1-10,15H",KLLLJCACIRKBDT-UHFFFAOYSA-N,13698,"['Sigma-Aldrich', 'TCI (Tokyo Chemical Industry)', 'Combi-Blocks', 'Thermo Fisher Scientific', 'Thermo Fisher Scientific', 'Thermo Fisher Scientific', 'Thermo Fisher Scientific', 'VWR, Part of Avantor', 'Ambeed']",948-65-2
-c1ccc2c(c1)Cn1c-2cc2ccccc21,"InChI=1S/C15H11N/c1-3-7-13-12(6-1)10-16-14-8-4-2-5-11(14)9-15(13)16/h1-9H,10H2",JJUQRPHMJPHFBH-UHFFFAOYSA-N,13207630,"['Ambeed', 'Combi-Blocks']",248-71-5
-Cn1c(-c2ccccc2)cc2ccccc21,"InChI=1S/C15H13N/c1-16-14-10-6-5-9-13(14)11-15(16)12-7-3-2-4-8-12/h2-11H,1H3",SFWZZSXCWQTORH-UHFFFAOYSA-N,77095,"['Sigma-Aldrich', 'Thermo Fisher Scientific', 'Thermo Fisher Scientific', 'Thermo Fisher Scientific', 'Combi-Blocks', 'TCI (Tokyo Chemical Industry)', 'Ambeed']",3558-24-5
-Cc1ccc2cc(-c3ccccc3)[nH]c2c1,"InChI=1S/C15H13N/c1-11-7-8-13-10-15(16-14(13)9-11)12-5-3-2-4-6-12/h2-10,16H,1H3",WHOVJSPCXWJPBL-UHFFFAOYSA-N,261513,"['Ambeed', 'Combi-Blocks']",66354-87-8
-O=C(Cl)C(Cl)Cl,InChI=1S/C2HCl3O/c3-1(4)2(5)6/h1H,FBCCMZVIWNDFMO-UHFFFAOYSA-N,6593,"['TCI (Tokyo Chemical Industry)', 'Thermo Fisher Scientific', 'Thermo Fisher Scientific', 'VWR, Part of Avantor', 'VWR, Part of Avantor', 'Sigma-Aldrich']",79-36-7
-Cc1ccc2[nH]c(-c3ccccc3)cc2c1,"InChI=1S/C15H13N/c1-11-7-8-14-13(9-11)10-15(16-14)12-5-3-2-4-6-12/h2-10,16H,1H3",JPFTUUXPCFNLIX-UHFFFAOYSA-N,83247,"['Sigma-Aldrich', 'Ambeed']",13228-36-9
