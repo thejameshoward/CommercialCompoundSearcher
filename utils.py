@@ -349,6 +349,7 @@ class PubchemVendor:
         self.SourceName = vendor_info.get('SourceName')
         self.SourceRecordURL = vendor_info.get('SourceRecordURL')
         self.SourceURL = vendor_info.get('SourceURL')
+        self.vendor_info = vendor_info
 
         #for k in vendor_info.keys():
         #    if k not in ['SourceURL', 'SourceRecordURL', 'SourceName', 'SourceDetail', 'SID', 'RegistryID']:
