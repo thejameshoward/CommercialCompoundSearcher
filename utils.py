@@ -648,6 +648,22 @@ def get_CAS_from_cid(cid: int) -> str | None:
 
     return str(CAS[0])
 
+
+def get_smiles_from_cid(cid: int) -> str | None:
+    '''
+    Gets the SMILES string from Pubchem based on the
+    CID using the PUG REST API
+
+    Returns None if no smiles was found
+    '''
+
+    url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/property/CanonicalSMILES/JSON/'
+    with urllib.request.urlopen(url) as u:
+        data = u.read()
+    data = data.decode('utf-8')
+    j = json.loads(data)
+    return j['PropertyTable']['Properties'][0]['CanonicalSMILES']
+
 def get_SMILES_from_CAS(cas: int) -> str | None:
     '''
     Gets a canonical SMILES string from Pubchem based
