@@ -25,7 +25,7 @@ If you'd like to use your own environment, here is a list of known dependencies.
 
 ## Future features
 
-1.  Include purchase links in vendor selection (WIP)
+1.  Access prices from vendors (WIP)
 
 ## Contributors
 -   James Howard, PhD
