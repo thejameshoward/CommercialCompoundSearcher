@@ -1,1 +1,0 @@
-CC1=CC=C(C=C1)S(=O)(=O)[O-].C[S+](CCC(C(=O)O)N)CC1C(C(C(O1)N2C=NC3=C(N=CN=C32)N)O)O

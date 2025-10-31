@@ -1,1 +1,0 @@
-C1=CC=NC(=C1)N=NC2=C(C=C(C=C2)O)O.[Na+]

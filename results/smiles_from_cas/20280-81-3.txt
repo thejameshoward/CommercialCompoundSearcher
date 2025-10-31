@@ -1,1 +1,0 @@
-COC1=CC(=O)OC2=CC=CC=C21

@@ -1,1 +1,0 @@
-COC1=C(C2=CC=CC=C2C=C1)Br

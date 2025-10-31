@@ -1,1 +1,0 @@
-C1=CC=C2C(=C1)C=C(C(=C2C3=C(C(=CC4=CC=CC=C43)Br)O)O)Br

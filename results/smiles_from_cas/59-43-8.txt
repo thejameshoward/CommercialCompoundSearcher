@@ -1,1 +1,0 @@
-CC1=C(SC=[N+]1CC2=CN=C(N=C2N)C)CCO.[Cl-]

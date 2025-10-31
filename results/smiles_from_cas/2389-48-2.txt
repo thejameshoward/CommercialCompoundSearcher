@@ -1,1 +1,0 @@
-CC(C)(C)OC(=O)NCCCCC(C(=O)OC)N.Cl

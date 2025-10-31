@@ -1,1 +1,0 @@
-CC1=CC(=C(C(=C1)C)N2CCN(C2=[Ru](=CC3=C(C=CC(=C3)S(=O)(=O)N(C)C)OC(C)C)(Cl)Cl)C4=C(C=C(C=C4C)C)C)C

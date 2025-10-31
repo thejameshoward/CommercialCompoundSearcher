@@ -1,1 +1,0 @@
-COC1=CC=C(C=C1)P2(=S)SP(=S)(S2)C3=CC=C(C=C3)OC

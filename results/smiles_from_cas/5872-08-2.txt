@@ -1,1 +1,0 @@
-CC1(C2CCC1(C(=O)C2)CS(=O)(=O)O)C

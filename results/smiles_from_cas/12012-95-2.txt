@@ -1,1 +1,0 @@
-[CH2-]C=C.[CH2-]C=C.Cl[Pd+].Cl[Pd+]
