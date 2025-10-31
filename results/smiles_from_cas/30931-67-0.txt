@@ -1,0 +1,1 @@
+CCN1C2=C(C=C(C=C2)S(=O)(=O)O)SC1=NN=C3N(C4=C(S3)C=C(C=C4)S(=O)(=O)O)CC.N.N

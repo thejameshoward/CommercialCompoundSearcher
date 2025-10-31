@@ -1,0 +1,1 @@
+CC1=CCC(C=CCC(=CCC1)C)(C)C

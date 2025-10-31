@@ -362,7 +362,7 @@ def filter_vendor_objects(vendor_list: list[PubchemVendor],
                           vendors_to_keep) -> list[PubchemVendor]:
     return [x for x in vendor_list if x.SourceName in vendors_to_keep]
 
-def canonicalize_smiles(smiles: str) -> str:
+def canonicalize_smiles(smiles: str) -> str | np.nan:
     '''
     Creates an RDKit mol object from a SMILES
     string and converts the mol into a canonical

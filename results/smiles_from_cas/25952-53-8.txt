@@ -1,0 +1,1 @@
+CCN=C=NCCCN(C)C.Cl

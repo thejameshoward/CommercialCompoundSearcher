@@ -1,0 +1,1 @@
+CCC1=CC2=CC3=NC(=CC4=C(C(=C(N4CC)C(=C5C(=C(C(=N5)C(=C1N2)CC)CC)CC)CC)CC)CC)C=C3.[Cl-].[Cl-].[Cl-].[Fe+3]

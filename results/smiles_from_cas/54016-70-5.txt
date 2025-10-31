@@ -1,0 +1,1 @@
+CC[N+]1=CSC(=C1C)CCO.[Br-]

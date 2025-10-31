@@ -1,0 +1,1 @@
+CC(C)[Si](C(C)C)(C(C)C)OS(=O)(=O)C(F)(F)F

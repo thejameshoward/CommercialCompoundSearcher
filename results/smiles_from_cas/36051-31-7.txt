@@ -1,0 +1,1 @@
+C1=NC2=C(N1C3C(C(C(O3)COP(=O)(O)OP(=O)([O-])OP(=O)([O-])[O-])O)O)N=C(NC2=O)N.[Na+].[Na+].[Na+]

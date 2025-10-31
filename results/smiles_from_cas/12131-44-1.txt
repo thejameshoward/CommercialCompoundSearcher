@@ -1,0 +1,1 @@
+C=C[CH-]C1=CC=CC=C1.C=C[CH-]C1=CC=CC=C1.[Cl-].[Cl-].[Pd+2].[Pd+2]
