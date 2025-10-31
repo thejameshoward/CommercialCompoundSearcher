@@ -679,7 +679,15 @@ def get_SMILES_from_CAS(cas: int) -> str | None:
     j = json.loads(data)
 
 
-    SMILES = j['PropertyTable']['Properties'][0]['CanonicalSMILES']
+    try:
+        SMILES = j['PropertyTable']['Properties'][0]['ConnectivitySMILES']
+    except KeyError as e:
+        print(f'Warning: ConnectivitySMILES keyerror. Using CanonicalSMILES')
+        try:
+            SMILES = j['PropertyTable']['Properties'][0]['ConnectivitySMILES']
+        except KeyError as e:
+            print(f'Could not get SMILES for {cas}')
+            return None
 
     if len(SMILES) == 0:
         return None
