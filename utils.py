@@ -622,6 +622,7 @@ def draw_molecules_to_grid_image(smiles: list[str],
 
     return ims
 
+
 def get_CAS_from_cid(cid: int) -> str | None:
     '''
     Gets a CAS number from Pubchem based on
@@ -662,7 +663,21 @@ def get_smiles_from_cid(cid: int) -> str | None:
         data = u.read()
     data = data.decode('utf-8')
     j = json.loads(data)
-    return j['PropertyTable']['Properties'][0]['CanonicalSMILES']
+
+    try:
+        SMILES = j['PropertyTable']['Properties'][0]['ConnectivitySMILES']
+    except KeyError as e:
+        print(f'Warning: ConnectivitySMILES keyerror. Using CanonicalSMILES')
+        try:
+            SMILES = j['PropertyTable']['Properties'][0]['ConnectivitySMILES']
+        except KeyError as e:
+            print(f'Could not get SMILES for {cid}')
+            return None
+
+    if len(SMILES) == 0:
+        return None
+
+    return str(SMILES)
 
 def get_SMILES_from_CAS(cas: int) -> str | None:
     '''
