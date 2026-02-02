@@ -693,7 +693,6 @@ def get_SMILES_from_CAS(cas: int) -> str | None:
     data = data.decode('utf-8')
     j = json.loads(data)
 
-
     try:
         SMILES = j['PropertyTable']['Properties'][0]['ConnectivitySMILES']
     except KeyError as e:
