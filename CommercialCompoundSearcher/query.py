@@ -9,9 +9,12 @@ from __future__ import annotations
 
 import json
 import urllib
+import logging
 import urllib.request
 
 from .utils import PubchemVendor
+
+logger = logging.getLogger(__name__)
 
 
 def query_cid_from_inchi_key(inchi_key: str):
@@ -93,16 +96,14 @@ def get_vendor_json(cid: int) -> list:
     return results
 
 
-def get_CAS_from_cid(cid: int) -> str | None:
+def query_CAS_from_cid(cid: int) -> str | None:
     '''
     Gets a CAS number from Pubchem based on
     the CID using the PUG REST API
-
-    Returns empty string if no CAS is found
     '''
-    #print(cid, type(cid))
+
     url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/synonyms/JSON/'
-    #print(url)
+
     with urllib.request.urlopen(url) as u:
         data = u.read()
     data = data.decode('utf-8')
@@ -114,8 +115,7 @@ def get_CAS_from_cid(cid: int) -> str | None:
         return None
 
     if len(CAS) != 1:
-        print(f'Found {len(CAS)} CAS numbers for CID {cid}')
-        print(CAS)
+        logger.warning('Found %d CAS number for CID %d. %s', len(CAS), cid, str(CAS))
 
     return str(CAS[0])
 

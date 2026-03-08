@@ -6,6 +6,7 @@ For initializing and managing a PubChem cache database
 '''
 import json
 import sqlite3
+import logging
 
 from pathlib import Path
 
@@ -396,11 +397,11 @@ def upsert_identifier_lookup(conn: sqlite3.Connection,
     conn.commit()
 
 
-def get_identifier_lookup(conn: sqlite3.Connection,
-                          identifier_type: str,
-                          identifier_value: str) -> tuple[int | None, str | None]:
+def get_CID_from_identifier(conn: sqlite3.Connection,
+                            identifier_type: str,
+                            identifier_value: str) -> tuple[int | None, str | None]:
     '''
-    Retrieve a cached identifier to CID mapping.
+    Retrieve a chached CID from an identifier.
 
     Parameters
     ----------
@@ -438,6 +439,55 @@ def get_identifier_lookup(conn: sqlite3.Connection,
         return None, None
 
     return row['cid'], row['status']
+
+
+def get_identifiers_from_CID(conn: sqlite3.Connection,
+                             identifier_type: str,
+                             cid: int) -> tuple[list[str] | None, str | None]:
+    '''
+    Retrieve cached identifiers from a CID.
+
+    Parameters
+    ----------
+    conn: sqlite3.Connection
+        Open SQLite connection to the unified cache database.
+
+    identifier_type: str
+        Identifier category such as smiles, cas, inchikey, or name.
+
+    cid: int
+        PubChem CID.
+
+    Returns
+    -------
+    result: tuple[list[str] | None, str | None]
+        Cached identifier values and status, or (None, None) if no record exists.
+    '''
+    _validate_identifier_type(identifier_type)
+
+    # Read all mappings for the provided CID and identifier type.
+    rows = conn.execute(
+        '''
+        SELECT identifier_value, status
+        FROM identifier_lookup
+        WHERE identifier_type = ?
+        AND cid = ?
+        ''',
+        (
+            identifier_type,
+            cid
+        )
+    ).fetchall()
+
+    if len(rows) == 0:
+        return None, None
+
+    identifier_values = [row['identifier_value'] for row in rows]
+
+    # If multiple statuses somehow exist, use the first one.
+    status = rows[0]['status']
+
+    return identifier_values, status
 
 
 def get_cid_from_smiles(conn: sqlite3.Connection,
