@@ -39,6 +39,28 @@ def query_cid_from_inchi_key(inchi_key: str):
     return j['IdentifierList']['CID'][0]
 
 
+def query_CID_from_CAS(cas: str):
+    '''
+    Gets the CID from Pubchem using the PUG REST API.
+
+    Parameters
+    ----------
+    cas: str
+        WRITE DOC STRING
+
+    Returns
+    ----------
+    str
+    '''
+    url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{cas}/cids/JSON/'
+    with urllib.request.urlopen(url) as u:
+        data = u.read()
+    data = data.decode('utf-8')
+    j = json.loads(data)
+
+    return j['IdentifierList']['CID'][0]
+
+
 def query_vendors_from_cid(cid: int) -> list[PubchemVendor]:
     '''
     Gets a list of vendors from Pubchem based on
@@ -120,7 +142,7 @@ def query_CAS_from_cid(cid: int) -> str | None:
     return str(CAS[0])
 
 
-def get_smiles_from_cid(cid: int) -> str | None:
+def query_SMILES_from_CID(cid: int) -> str | None:
     '''
     Gets the SMILES string from Pubchem based on the
     CID using the PUG REST API
